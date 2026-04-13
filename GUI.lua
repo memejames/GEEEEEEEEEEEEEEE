@@ -54,7 +54,7 @@ KeySystem.__index = KeySystem
 function KeySystem.new()
     return setmetatable({
         _showConfig        = {},
-        _discord           = {},
+        _           = {},
         _validate          = {},
         _getKey            = {},
         _input             = {},
@@ -84,6 +84,11 @@ function KeySystem:Discord(config)
     self._discord = config or {}
     if self._built then self:_applyDiscord() end
     return self
+end
+
+function KeySystem:Status(msg, r, g, b, clearAfter)
+    local color = Color3.fromRGB(r or 150, g or 150, b or 170)
+    self:_setStatus(msg, color, clearAfter)
 end
 
 function KeySystem:GetKey(config)
@@ -368,15 +373,15 @@ function KeySystem:_setStatus(msg, color, clearAfter)
         end)
     end
 end
-function KeySystem:_applyDiscord()
-    local btn = self._discordButton
+function KeySystem:_apply()
+    local btn = self._Button
     if not btn then return end
-    local cfg = self._discord or {}
+    local cfg = self._ or {}
     if cfg.Title and cfg.Title ~= "" then btn.Text = cfg.Title end
-    if self._discordConnected then return end
-    self._discordConnected = true
+    if self._Connected then return end
+    self._Connected = true
     btn.MouseButton1Click:Connect(function()
-        local cb = (self._discord or {}).Callback
+        local cb = (self._ or {}).Callback
         if cb then task.spawn(cb) end
     end)
 end
