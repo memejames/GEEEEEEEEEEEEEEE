@@ -86,11 +86,6 @@ function KeySystem:Discord(config)
     return self
 end
 
-function KeySystem:Status(msg, r, g, b, clearAfter)
-    local color = Color3.fromRGB(r or 150, g or 150, b or 170)
-    self:_setStatus(msg, color, clearAfter)
-end
-
 function KeySystem:GetKey(config)
     self._getKey = config or {}
     if self._built then self:_applyGetKey() end
