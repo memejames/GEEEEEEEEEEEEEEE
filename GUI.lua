@@ -74,11 +74,7 @@ local function addStroke(parent, color, thickness, transparency)
 end
 
 local function tween(instance, duration, goal, easingStyle, easingDirection)
-    local info = TweenInfo.new(
-        duration,
-        easingStyle or Enum.EasingStyle.Quad,
-        easingDirection or Enum.EasingDirection.Out
-    )
+    local info = TweenInfo.new(duration, easingStyle or Enum.EasingStyle.Quad, easingDirection or Enum.EasingDirection.Out)
     local animation = TweenService:Create(instance, info, goal)
     animation:Play()
     return animation
@@ -311,6 +307,9 @@ function KeySystem:SuccessGui()
     task.wait(2)
 
     tween(mainFrame, 0.4, { BackgroundTransparency = 1 }, Enum.EasingStyle.Quart)
+    if stroke then
+        tween(stroke, 0.4, { Transparency = 1 })
+    end
     tween(checkIcon, 0.3, { TextTransparency = 1 })
     tween(titleLabel, 0.3, { TextTransparency = 1 })
     tween(subtitleLabel, 0.3, { TextTransparency = 1 })
@@ -490,23 +489,11 @@ function KeySystem:_buildButtons(mainFrame)
     local topRow = createRow(155)
     local bottomRow = createRow(205)
 
-    self._getKeyButton = createButton(
-        topRow, "Get Key",
-        Theme.GetKey, Theme.TextButtonMuted, Theme.GetKeyHover
-    )
-    self._validateButton = createButton(
-        topRow, "Validate",
-        Theme.Validate, Theme.TextPrimary, Theme.ValidateHover, 0.52
-    )
-    self._discordButton = createButton(
-        bottomRow, "Join Discord",
-        Theme.Discord, Theme.TextPrimary, Theme.DiscordHover
-    )
+    self._getKeyButton = createButton(topRow, "Get Key", Theme.GetKey, Theme.TextButtonMuted, Theme.GetKeyHover)
+    self._validateButton = createButton(topRow, "Validate", Theme.Validate, Theme.TextPrimary, Theme.ValidateHover, 0.52)
+    self._discordButton = createButton(bottomRow, "Join Discord", Theme.Discord, Theme.TextPrimary, Theme.DiscordHover)
 
-    local closeButton = createButton(
-        bottomRow, "Close Script",
-        Theme.Close, Theme.TextPrimary, Theme.CloseHover, 0.52
-    )
+    local closeButton = createButton(bottomRow, "Close Script", Theme.Close, Theme.TextPrimary, Theme.CloseHover, 0.52)
     closeButton.MouseButton1Click:Connect(function()
         self:Delete()
     end)
